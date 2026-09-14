@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --color-canvas: #021921;
+  --color-surface: #0f0f1a;
+  --color-text: #F1F7F5;
+  --color-accent: #d0471d;
+  --color-muted: #8888a8;
+  --color-border: rgba(241, 247, 245, 0.08);
+}
+
+body {
+  font-family: 'Lexend', sans-serif;
+  background-color: var(--color-canvas);
+  color: var(--color-text);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+nav a {
+  color: var(--color-muted);
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+nav a:hover, nav a.active {
+  color: var(--color-accent);
+}
+
+.container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+footer {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  border-top: 1px solid var(--color-border);
+  margin-top: 60px;
+}
