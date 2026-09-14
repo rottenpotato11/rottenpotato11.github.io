@@ -1,10 +1,117 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Ha Phuong Uyen</title>
-  </head>
-  <body>
-    <h1>Hello, I'm Ha Phuong Uyen!</h1>
-    <p>Welcome to my little world.</p>
-  </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ha Phuong Uyen - Blog & Lab</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+        }
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #eaeaea;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+        }
+        header h2 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+        nav a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #555;
+            font-weight: bold;
+        }
+        nav a:hover {
+            color: #000;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        section {
+            margin-bottom: 40px;
+        }
+        h1, h2 {
+            color: #111;
+        }
+        .blog-post, .lab-item {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h2>Ha Phuong Uyen</h2>
+        <nav>
+            <a href="#home">Homepage</a>
+            <a href="#lab">Lab</a>
+            <a href="#blogs">Blogs</a>
+            <a href="#about">About Me</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- HOMEPAGE SECTION -->
+        <section id="home">
+            <h1>Welcome to my digital space!</h1>
+            <p>Hi there! I'm Ha Phuong Uyen. This is where I share my thoughts, document my experiments in my lab, and write about things I learn.</p>
+        </section>
+
+        <!-- LAB SECTION -->
+        <section id="lab">
+            <h2>Lab</h2>
+            <p>Welcome to my sandbox. Here are some mini-projects and code experiments I'm working on:</p>
+            <div class="lab-item">
+                <h3>Experiment 1: Coming Soon</h3>
+                <p>Description of a cool tool, script, or mini-project I am building.</p>
+            </div>
+        </section>
+
+        <!-- BLOGS SECTION -->
+        <section id="blogs">
+            <h2>Blogs</h2>
+            <div class="blog-post">
+                <h3>First Blog Post</h3>
+                <p><small>Posted on September 15, 2026</small></p>
+                <p>This is a placeholder for my first blog article. Stay tuned for more updates!</p>
+            </div>
+        </section>
+
+        <!-- ABOUT ME SECTION -->
+        <section id="about">
+            <h2>About Me</h2>
+            <p>Write a little bit about your background, your interests, what you are studying or working on, and what you hope to achieve with this site.</p>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Ha Phuong Uyen. Built with GitHub Pages.</p>
+    </footer>
+
+</body>
 </html>
