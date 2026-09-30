@@ -3,28 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ha Phuong Uyen - Blog</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <title>rottenpotato11 | Blog</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h2>Ha Phuong Uyen</h2>
-        <nav>
-            <a href="index.html">Homepage</a>
-            <a href="work.html">Work</a>
-            <a href="lab.html">Lab</a>
-            <a href="blog.html" class="active">Blog</a>
-            <a href="about.html">About Me</a>
-        </nav>
-    </header>
+    <!-- Navigation Header -->
+    <div id="site-header"></div>
 
     <main class="container">
         <h1>Blog</h1>
-        <p>Thoughts, tutorials, and write-ups on things I am learning.</p>
+        <p>Yada yada.</p>
     </main>
 
-    <footer>
-        <p>&copy; 2026 Ha Phuong Uyen</p>
-    </footer>
+    <!-- Footer -->
+    <div id="site-footer"></div>
+
+    <!-- Script to Load Components & Handle Nav Highlighting -->
+    <script>
+        fetch('header.html')
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById('site-header').innerHTML = data;
+                
+                // Automatically find current page and add 'active' class
+                let currentPath = window.location.pathname.split('/').pop();
+                if (currentPath === '' || currentPath === '/') {
+                    currentPath = 'index.html';
+                }
+                
+                document.querySelectorAll('nav a').forEach(link => {
+                    if (link.getAttribute('href') === currentPath) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+            });
+
+        fetch('footer.html')
+            .then(res => res.text())
+            .then(data => document.getElementById('site-footer').innerHTML = data);
+    </script>
 </body>
 </html>
