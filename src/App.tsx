@@ -37,7 +37,7 @@ const lab = [
 ] as const;
 
 const posts = [
-  ['05.02.26', 'Designing identities that can misbehave', 'Why the most useful visual systems leave room for accidents, misuse, and surprise.', 'PROCESS', '06 MIN'],
+  ['05.02.26', 'Designing identities that can hehehe', 'Why the most useful visual systems leave room for accidents, misuse, and surprise.', 'PROCESS', '06 MIN'],
   ['18.01.26', 'A field guide to good loading screens', 'Notes from collecting pauses, progress bars, and fake system messages in games.', 'INTERFACE', '04 MIN'],
   ['09.12.25', 'The useful friction of old tools', 'What a week with a photocopier, wax pencil, and no undo button changed.', 'TOOLS', '08 MIN'],
   ['21.11.25', 'Looking at: Japanese jazz sleeves', 'A short visual index of scale, silence, cropping, and beautifully difficult type.', 'REFERENCE', '05 MIN'],
