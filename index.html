@@ -1,91 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="favicon.png">
-    <title>rottenpotato11</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <!-- Navigation Header Injection Point -->
-    <div id="site-header"></div>
-
-    <!-- Main Content Area -->
-    <main class="container">
-        <!-- Hero Section -->
-        <section class="hero">
-            <h1>◝(ᵔᗜᵔ)◜</h1>
-            <p class="subtitle">
-                Welcome to my lil digital world (. ❛ ᴗ ❛.)७✎▤
-            </p>
-        </section>
-
-        <!-- Subtle Section Divider -->
-        <hr class="divider">
-
-        <!-- Quick Navigation Cards / Overview -->
-        <section class="overview-grid">
-            <div class="card">
-                <h3>Work</h3>
-                <p>Serious stuff goes here ( ͡• _•)</p>
-                <a href="work.html" class="card-link">See more &rarr;</a>
-            </div>
-
-            <div class="card">
-                <h3>Lab</h3>
-                <p>My sandbox where I simply try out different things ૮₍ ´ ꒳ `₎ა</p>
-                <a href="lab.html" class="card-link">Visit my lab &rarr;</a>
-            </div>
-            
-            <div class="card">
-                <h3>Blog</h3>
-                <p>Yada yada ˙𐃷˙</p>
-                <a href="blog.html" class="card-link">Read more &rarr;</a>
-            </div>
-
-            <div class="card">
-                <h3>Archive</h3>
-                <p>Cool stuff I've seen</p>
-                <a href="archive.html" class="card-link">View &rarr;</a>
-            </div>
-
-            <div class="card">
-                <h3>About me</h3>
-                <p>Still wondering who the heck I am? 〜⁠(⁠꒪⁠꒳⁠꒪⁠)⁠〜</p>
-                <a href="about.html" class="card-link">Read more &rarr;</a>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer Injection Point -->
-    <div id="site-footer"></div>
-
-    <!-- Script to Load Components & Handle Nav Highlighting -->
-    <script>
-        fetch('header.html')
-            .then(res => res.text())
-            .then(data => {
-                document.getElementById('site-header').innerHTML = data;
-                
-                // Automatically find current page and add 'active' class
-                let currentPath = window.location.pathname.split('/').pop();
-                if (currentPath === '' || currentPath === '/') {
-                    currentPath = 'index.html';
-                }
-                
-                document.querySelectorAll('nav a').forEach(link => {
-                    if (link.getAttribute('href') === currentPath) {
-                        link.classList.add('active');
-                    } else {
-                        link.classList.remove('active');
-                    }
-                });
-            });
-
-        fetch('footer.html')
-            .then(res => res.text())
-            .then(data => document.getElementById('site-footer').innerHTML = data);
-    </script>
-</body>
+<!doctype html>
+<html lang="<!-- figma:lang -->">
+  <head>
+    <!-- figma:head-start -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><!-- figma:title --></title>
+    <!-- figma:head-end -->
+  </head>
+  <body>
+    <!-- figma:body-start -->
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <!-- figma:body-end -->
+  </body>
 </html>

@@ -1,0 +1,580 @@
+[/workspaces/default/code/src/App.tsx#3ff6]
+1:import { useState, useEffect } from 'react';
+2:
+3:// ── Data ──────────────────────────────────────────────────────────────────────
+4:
+5:const workProjects = [
+6:  {
+7:    id: 1,
+8:    title: 'NOCTURNE RECORDS',
+9:    type: 'Brand Identity',
+10:    year: '2025',
+11:    tags: ['BRANDING', 'PRINT'],
+12:    description: 'Complete visual system for an underground vinyl label — logotype, sleeve templates, and a 60-page style guide.',
+13:    img: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c6f?w=600&h=400&fit=crop&auto=format',
+14:  },
+15:  {
+16:    id: 2,
+17:    title: 'CONCRETE DREAMS III',
+18:    type: 'Editorial / Zine',
+19:    year: '2025',
+20:    tags: ['EDITORIAL', 'TYPO'],
+21:    description: 'Third volume of a self-published zine exploring brutalist architecture through collage and experimental typography.',
+22:    img: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&h=400&fit=crop&auto=format',
+23:  },
+24:  {
+25:    id: 3,
+26:    title: 'LABYRINTH UI',
+27:    type: 'Game UI Design',
+28:    year: '2024',
+29:    tags: ['UI/UX', 'GAME'],
+30:    description: 'Interface design and icon system for an indie puzzle-platformer. HUD, menus, inventory, and achievement badges.',
+31:    img: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600&h=400&fit=crop&auto=format',
+32:  },
+33:  {
+34:    id: 4,
+35:    title: 'MOTION REEL 2025',
+36:    type: 'Motion Design',
+37:    year: '2025',
+38:    tags: ['MOTION', 'DIGITAL'],
+39:    description: 'Compilation of motion graphics projects: title sequences, social content, and brand animations.',
+40:    img: 'https://images.unsplash.com/photo-1617802690658-1173a812650d?w=600&h=400&fit=crop&auto=format',
+41:  },
+42:  {
+43:    id: 5,
+44:    title: 'SOLSTICE FESTIVAL',
+45:    type: 'Event Branding',
+46:    year: '2024',
+47:    tags: ['BRANDING', 'POSTER'],
+48:    description: 'Full campaign identity for a 3-day electronic music festival: posters, tickets, wayfinding, and merch.',
+49:    img: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600&h=400&fit=crop&auto=format',
+50:  },
+51:  {
+52:    id: 6,
+53:    title: 'ARCHIVE TYPEFACE',
+54:    type: 'Type Design',
+55:    year: '2024',
+56:    tags: ['TYPE', 'PRINT'],
+57:    description: 'A display typeface inspired by mid-century European propaganda posters. Available in 3 weights.',
+58:    img: 'https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?w=600&h=400&fit=crop&auto=format',
+59:  },
+60:];
+61:
+62:type LabCategory = 'PICTURES' | 'VIDEO' | 'GAMES';
+63:
+64:const labItems: {
+65:  id: number; title: string; category: LabCategory;
+66:  description: string; img: string; label?: string;
+67:}[] = [
+68:  {
+69:    id: 1, title: 'GRAIN STUDIES', category: 'PICTURES',
+70:    description: 'Film photography series shot on expired 35mm Kodak Gold. Pushed two stops in development.',
+71:    img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=450&fit=crop&auto=format',
+72:  },
+73:  {
+74:    id: 2, title: 'URBAN TEXTURES VOL.2', category: 'PICTURES',
+75:    description: 'Macro documentation of surfaces found in Berlin\'s industrial districts.',
+76:    img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=450&fit=crop&auto=format',
+77:  },
+78:  {
+79:    id: 3, title: 'GENERATIVE SERIES 01', category: 'PICTURES',
+80:    description: 'Algorithm-driven compositions using custom noise fields. Each image rendered from a unique seed.',
+81:    img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&h=450&fit=crop&auto=format',
+82:  },
+83:  {
+84:    id: 4, title: 'LOFI BASEMENT SESSION', category: 'VIDEO',
+85:    description: 'Music video for a bedroom producer. VHS-era aesthetic using practical effects only — no plugins.',
+86:    img: 'https://images.unsplash.com/photo-1598387993441-a364f854a80d?w=600&h=450&fit=crop&auto=format',
+87:    label: '▶ PLAY',
+88:  },
+89:  {
+90:    id: 5, title: 'CITY IN FRAMES', category: 'VIDEO',
+91:    description: 'Experimental short about urban isolation. Shot on a Bolex 16mm with anamorphic glass.',
+92:    img: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=600&h=450&fit=crop&auto=format',
+93:    label: '▶ PLAY',
+94:  },
+95:  {
+96:    id: 6, title: 'THE WANDERER', category: 'GAMES',
+97:    description: 'Text adventure built in 48 hours for a game jam. Parser-based with 3 endings and 12 locations.',
+98:    img: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&h=450&fit=crop&auto=format',
+99:    label: '▶ PLAY GAME',
+100:  },
+101:  {
+102:    id: 7, title: 'PIXEL GARDEN', category: 'GAMES',
+103:    description: 'A meditative idle game about tending a garden on a distant planet. Made in Godot 4.',
+104:    img: 'https://images.unsplash.com/photo-1462275646964-a0e3386b89fa?w=600&h=450&fit=crop&auto=format',
+105:    label: '▶ PLAY GAME',
+106:  },
+107:];
+108:
+109:const blogPosts = [
+110:  {
+111:    id: 1,
+112:    filename: '001_textures-in-old-hardware.txt',
+113:    title: 'On Finding Textures in Old Hardware',
+114:    date: '2026-09-12',
+115:    size: '3.2kb',
+116:    excerpt: 'There\'s something about the physical residue of technology — the worn edges of a floppy disk, the yellowed chassis of a beige tower — that no synthetic aging filter can replicate. You have to go looking for it.',
+117:  },
+118:  {
+119:    id: 2,
+120:    filename: '002_why-i-still-scan-film.txt',
+121:    title: 'Why I Still Shoot and Scan Film in 2026',
+122:    date: '2026-08-28',
+123:    size: '5.1kb',
+124:    excerpt: 'The argument isn\'t about nostalgia. It\'s about constraint. Digital cameras give you unlimited shots. Film gives you thirty-six decisions. That\'s a completely different creative relationship with the work.',
+125:  },
+126:  {
+127:    id: 3,
+128:    filename: '003_game-jam-48hrs.txt',
+129:    title: 'What Building a Game in 48 Hours Teaches You',
+130:    date: '2026-07-14',
+131:    size: '4.8kb',
+132:    excerpt: 'By hour 30, you stop caring about perfect code. You stop caring about perfect art. You just need the thing to exist and work. It\'s the most clarifying design constraint I\'ve ever worked under.',
+133:  },
+134:  {
+135:    id: 4,
+136:    filename: '004_type-before-type.txt',
+137:    title: 'Lettering Before You Learn Fonts',
+138:    date: '2026-06-02',
+139:    size: '2.7kb',
+140:    excerpt: 'My typography teacher made us draw every letterform by hand for an entire semester before we were allowed to open a type application. At the time I resented it. Now I recommend it to everyone.',
+141:  },
+142:  {
+143:    id: 5,
+144:    filename: '005_design-systems-overrated.txt',
+145:    title: 'When Design Systems Work Against You',
+146:    date: '2026-04-18',
+147:    size: '6.3kb',
+148:    excerpt: 'Design systems are infrastructure. And like all infrastructure, they\'re invisible when they work and catastrophic when they don\'t. The question is: who pays for the maintenance?',
+149:  },
+150:];
+151:
+152:// ── Components ────────────────────────────────────────────────────────────────
+153:
+154:function WindowChrome({
+155:  title, children, className = '',
+156:}: {
+157:  title: string; children: React.ReactNode; className?: string;
+158:}) {
+159:  return (
+160:    <div className={`window-chrome ${className}`}>
+161:      <div className="window-titlebar">
+162:        <div className="window-btns flex-shrink-0">
+163:          <span>▪</span><span>▫</span><span>✕</span>
+164:        </div>
+165:        <span className="window-titlebar-text flex-1 text-center px-2">{title}</span>
+166:        <div className="window-btns flex-shrink-0 opacity-0 pointer-events-none" aria-hidden>
+167:          <span>▪</span><span>▫</span><span>✕</span>
+168:        </div>
+169:      </div>
+170:      <div className="window-body">{children}</div>
+171:    </div>
+172:  );
+173:}
+174:
+175:function Cursor() {
+176:  return <span className="cursor-blink inline-block w-[0.6em] bg-phosphor-bright h-[1.1em] align-middle ml-0.5" />;
+177:}
+178:
+179:// ── Main App ──────────────────────────────────────────────────────────────────
+180:
+181:export default function App() {
+182:  const [activeSection, setActiveSection] = useState('home');
+183:  const [labFilter, setLabFilter] = useState<LabCategory>('PICTURES');
+184:  const [expandedPost, setExpandedPost] = useState<number | null>(null);
+185:  const [clock, setClock] = useState('');
+186:
+187:  useEffect(() => {
+188:    const tick = () => setClock(new Date().toLocaleTimeString('en-US', { hour12: false }));
+189:    tick();
+190:    const id = setInterval(tick, 1000);
+191:    return () => clearInterval(id);
+192:  }, []);
+193:
+194:  useEffect(() => {
+195:    const ids = ['home', 'work', 'lab', 'blog', 'about'];
+196:    const onScroll = () => {
+197:      for (let i = ids.length - 1; i >= 0; i--) {
+198:        const el = document.getElementById(ids[i]);
+199:        if (el && el.getBoundingClientRect().top <= 120) {
+200:          setActiveSection(ids[i]);
+201:          return;
+202:        }
+203:      }
+204:      setActiveSection('home');
+205:    };
+206:    window.addEventListener('scroll', onScroll, { passive: true });
+207:    return () => window.removeEventListener('scroll', onScroll);
+208:  }, []);
+209:
+210:  const scrollTo = (id: string) =>
+211:    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+212:
+213:  const filteredLab = labItems.filter(i => i.category === labFilter);
+214:
+215:  return (
+216:    <div className="min-h-screen bg-screen font-mono text-phosphor">
+217:
+218:      {/* ── NAV ─────────────────────────────────────────────────────────── */}
+219:      <nav className="fixed top-0 inset-x-0 z-50 border-b border-wire-bright bg-screen/95 backdrop-blur-sm h-10 flex items-center">
+220:        <div className="w-full max-w-6xl mx-auto px-4 flex items-center gap-0 h-full">
+221:          <button
+222:            onClick={() => scrollTo('home')}
+223:            className="font-terminal text-xl text-phosphor-bright glow-text tracking-widest mr-5 flex-shrink-0"
+224:          >
+225:            ◙ STUDIO.EXE
+226:          </button>
+227:          <span className="text-wire-bright mr-5 text-lg leading-none flex-shrink-0">│</span>
+228:          <div className="flex items-center">
+229:            {(['work', 'lab', 'blog', 'about'] as const).map(s => (
+230:              <button
+231:                key={s}
+232:                onClick={() => scrollTo(s)}
+233:                className={`font-terminal text-lg px-3 h-10 tracking-widest border-r border-wire transition-all ${
+234:                  activeSection === s
+235:                    ? 'bg-phosphor-faint text-phosphor-bright border-b-2 border-b-phosphor'
+236:                    : 'text-phosphor-dim hover:text-phosphor hover:bg-phosphor-faint border-b-2 border-b-transparent'
+237:                }`}
+238:              >
+239:                {s.toUpperCase()}
+240:              </button>
+241:            ))}
+242:          </div>
+243:          <div className="flex-1" />
+244:          <span className="font-terminal text-lg text-phosphor-dim tracking-widest tabular-nums flex-shrink-0">
+245:            {clock}
+246:          </span>
+247:        </div>
+248:      </nav>
+249:
+250:      <div className="pt-10">
+251:
+252:        {/* ── HERO ────────────────────────────────────────────────────────── */}
+253:        <section id="home" className="min-h-screen flex items-center justify-center px-4 py-24">
+254:          <div className="max-w-2xl w-full">
+255:            <WindowChrome title="BOOT.SYS — PORTFOLIO v3.0">
+256:              <div className="space-y-1 text-sm leading-relaxed">
+257:                <p className="text-phosphor-dim fade-in-1">SYSTEM READY. INITIALIZING USER SESSION...</p>
+258:                <p className="text-wire-bright fade-in-1">────────────────────────────────────────────────</p>
+259:                <div className="pt-2 space-y-1 fade-in-2">
+260:                  <p>&gt; USER.NAME&nbsp;&nbsp;: <span className="text-phosphor-bright font-bold">JANE DOE</span></p>
+261:                  <p>&gt; ROLE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <span className="text-phosphor-bright font-bold">GRAPHIC DESIGNER</span></p>
+262:                  <p>&gt; LOCATION&nbsp;&nbsp;: BERLIN, DE</p>
+263:                  <p>&gt; STATUS&nbsp;&nbsp;&nbsp;&nbsp;: <span className="text-phosphor-bright">AVAILABLE FOR PROJECTS</span></p>
+264:                </div>
+265:                <div className="pt-2 fade-in-3">
+266:                  <p>&gt; SPECIALTIES:</p>
+267:                  <p className="pl-12 text-phosphor-dim">─ BRAND IDENTITY &amp; VISUAL SYSTEMS</p>
+268:                  <p className="pl-12 text-phosphor-dim">─ MOTION &amp; INTERACTIVE MEDIA</p>
+269:                  <p className="pl-12 text-phosphor-dim">─ GAME UI &amp; PIXEL ART</p>
+270:                  <p className="pl-12 text-phosphor-dim">─ EDITORIAL &amp; PRINT DESIGN</p>
+271:                </div>
+272:                <div className="pt-4 fade-in-4">
+273:                  <p className="text-phosphor-dim">&gt; LOADING PORTFOLIO...</p>
+274:                  <div className="mt-2 border border-wire-bright h-3 overflow-hidden">
+275:                    <div className="progress-fill" />
+276:                  </div>
+277:                  <p className="mt-1 text-phosphor-dim text-xs">▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  100%  OK</p>
+278:                </div>
+279:                <div className="pt-4 fade-in-5">
+280:                  <p className="font-terminal text-3xl text-phosphor-bright tracking-widest glow-text">
+281:                    READY<Cursor />
+282:                  </p>
+283:                </div>
+284:                <div className="pt-5 flex gap-3 flex-wrap fade-in-6">
+285:                  <button
+286:                    onClick={() => scrollTo('work')}
+287:                    className="border border-phosphor px-4 py-1 font-terminal text-lg tracking-widest hover:bg-phosphor hover:text-screen transition-colors"
+288:                  >
+289:                    [ VIEW WORK ]
+290:                  </button>
+291:                  <button
+292:                    onClick={() => scrollTo('lab')}
+293:                    className="border border-wire-bright px-4 py-1 font-terminal text-lg tracking-widest text-phosphor-dim hover:border-phosphor hover:text-phosphor transition-colors"
+294:                  >
+295:                    [ OPEN LAB ]
+296:                  </button>
+297:                  <button
+298:                    onClick={() => scrollTo('about')}
+299:                    className="border border-wire-bright px-4 py-1 font-terminal text-lg tracking-widest text-phosphor-dim hover:border-phosphor hover:text-phosphor transition-colors"
+300:                  >
+301:                    [ ABOUT ME ]
+302:                  </button>
+303:                </div>
+304:              </div>
+305:            </WindowChrome>
+306:          </div>
+307:        </section>
+308:
+309:        {/* ── WORK ────────────────────────────────────────────────────────── */}
+310:        <section id="work" className="py-20 px-4 border-t border-wire">
+311:          <div className="max-w-6xl mx-auto">
+312:            <div className="mb-10 flex items-baseline gap-5 flex-wrap">
+313:              <h2 className="font-terminal text-6xl text-phosphor-bright glow-text tracking-widest">WORK/</h2>
+314:              <span className="text-phosphor-dim text-xs tracking-widest">SELECTED PROJECTS 2024–2025</span>
+315:            </div>
+316:            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+317:              {workProjects.map(project => (
+318:                <div key={project.id} className="window-chrome cursor-pointer group">
+319:                  {/* Mini title bar */}
+320:                  <div className="window-titlebar">
+321:                    <div className="window-btns flex-shrink-0">
+322:                      <span>▪</span><span>▫</span><span>✕</span>
+323:                    </div>
+324:                    <span className="window-titlebar-text flex-1 text-center px-2 truncate">
+325:                      {project.title}.PSD
+326:                    </span>
+327:                    <div className="window-btns flex-shrink-0 opacity-0 pointer-events-none">
+328:                      <span>▪</span><span>▫</span><span>✕</span>
+329:                    </div>
+330:                  </div>
+331:                  {/* Image */}
+332:                  <div className="relative overflow-hidden aspect-[3/2]">
+333:                    <img
+334:                      src={project.img}
+335:                      alt={project.title}
+336:                      className="w-full h-full object-cover phosphor-img transition-all duration-500"
+337:                    />
+338:                    <div className="absolute inset-0 bg-screen/20 group-hover:bg-transparent transition-colors duration-300" />
+339:                    <div className="absolute top-2 right-2 flex gap-1 flex-wrap justify-end">
+340:                      {project.tags.map(tag => (
+341:                        <span key={tag} className="font-terminal text-xs bg-screen/85 text-phosphor-dim border border-wire px-1 tracking-wider">
+342:                          {tag}
+343:                        </span>
+344:                      ))}
+345:                    </div>
+346:                  </div>
+347:                  {/* Info */}
+348:                  <div className="p-3 border-t border-wire">
+349:                    <div className="flex items-start justify-between gap-2 mb-0.5">
+350:                      <p className="font-terminal text-xl text-phosphor-bright tracking-wider leading-tight">
+351:                        {project.title}
+352:                      </p>
+353:                      <span className="font-terminal text-phosphor-dim text-sm flex-shrink-0">{project.year}</span>
+354:                    </div>
+355:                    <p className="text-xs text-phosphor-dim tracking-widest mb-2 uppercase">{project.type}</p>
+356:                    <p className="text-xs text-phosphor leading-relaxed">{project.description}</p>
+357:                  </div>
+358:                </div>
+359:              ))}
+360:            </div>
+361:          </div>
+362:        </section>
+363:
+364:        {/* ── LAB ─────────────────────────────────────────────────────────── */}
+365:        <section id="lab" className="py-20 px-4 border-t border-wire">
+366:          <div className="max-w-6xl mx-auto">
+367:            <div className="mb-10 flex items-baseline gap-5 flex-wrap">
+368:              <h2 className="font-terminal text-6xl text-phosphor-bright glow-text tracking-widest">LAB/</h2>
+369:              <span className="text-phosphor-dim text-xs tracking-widest">EXPERIMENTS &amp; PERSONAL MEDIA</span>
+370:            </div>
+371:            {/* Filter tabs */}
+372:            <div className="flex mb-8 border border-wire-bright w-fit">
+373:              {(['PICTURES', 'VIDEO', 'GAMES'] as const).map((cat, i) => (
+374:                <button
+375:                  key={cat}
+376:                  onClick={() => setLabFilter(cat)}
+377:                  className={`font-terminal text-lg px-6 py-1.5 tracking-widest transition-colors ${
+378:                    i > 0 ? 'border-l border-wire-bright' : ''
+379:                  } ${
+380:                    labFilter === cat
+381:                      ? 'bg-phosphor text-screen'
+382:                      : 'text-phosphor-dim hover:text-phosphor hover:bg-phosphor-faint'
+383:                  }`}
+384:                >
+385:                  {cat}
+386:                </button>
+387:              ))}
+388:            </div>
+389:            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+390:              {filteredLab.map(item => (
+391:                <div key={item.id} className="window-chrome cursor-pointer group">
+392:                  <div className="window-titlebar">
+393:                    <div className="window-btns flex-shrink-0"><span>▪</span><span>▫</span><span>✕</span></div>
+394:                    <span className="window-titlebar-text flex-1 text-center px-2">{item.title}</span>
+395:                    <div className="window-btns flex-shrink-0 opacity-0 pointer-events-none"><span>▪</span><span>▫</span><span>✕</span></div>
+396:                  </div>
+397:                  <div className="relative overflow-hidden aspect-[4/3]">
+398:                    <img
+399:                      src={item.img}
+400:                      alt={item.title}
+401:                      className="w-full h-full object-cover phosphor-img transition-all duration-500"
+402:                    />
+403:                    <div className="absolute inset-0 bg-screen/20 group-hover:bg-screen/5 transition-colors duration-300" />
+404:                    {item.label && (
+405:                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+406:                        <span className="font-terminal text-xl text-phosphor-bright bg-screen/85 px-5 py-2 border border-phosphor tracking-widest">
+407:                          {item.label}
+408:                        </span>
+409:                      </div>
+410:                    )}
+411:                  </div>
+412:                  <div className="p-3 border-t border-wire">
+413:                    <p className="font-terminal text-xl text-phosphor-bright tracking-wider mb-1">{item.title}</p>
+414:                    <p className="text-xs text-phosphor leading-relaxed">{item.description}</p>
+415:                  </div>
+416:                </div>
+417:              ))}
+418:            </div>
+419:          </div>
+420:        </section>
+421:
+422:        {/* ── BLOG ────────────────────────────────────────────────────────── */}
+423:        <section id="blog" className="py-20 px-4 border-t border-wire">
+424:          <div className="max-w-4xl mx-auto">
+425:            <div className="mb-10 flex items-baseline gap-5 flex-wrap">
+426:              <h2 className="font-terminal text-6xl text-phosphor-bright glow-text tracking-widest">BLOG/</h2>
+427:              <span className="text-phosphor-dim text-xs tracking-widest">NOTES &amp; WRITING</span>
+428:            </div>
+429:            <WindowChrome title="BLOG — /notes/index">
+430:              <div>
+431:                <p className="text-phosphor-dim text-xs mb-3 tracking-widest">
+432:                  total {blogPosts.length} files —{' '}
+433:                  {blogPosts.reduce((a, b) => a + parseFloat(b.size), 0).toFixed(1)}kb
+434:                </p>
+435:                {/* Header row */}
+436:                <div className="flex text-xs text-phosphor-dim tracking-widest pb-1.5 mb-1 border-b border-wire-bright">
+437:                  <span className="w-10 flex-shrink-0">NO.</span>
+438:                  <span className="flex-1 min-w-0 mr-4">FILENAME</span>
+439:                  <span className="w-28 text-right flex-shrink-0">DATE</span>
+440:                  <span className="w-12 text-right flex-shrink-0 ml-3">SIZE</span>
+441:                </div>
+442:                {blogPosts.map(post => (
+443:                  <div key={post.id}>
+444:                    <button
+445:                      className="w-full text-left"
+446:                      onClick={() => setExpandedPost(expandedPost === post.id ? null : post.id)}
+447:                    >
+448:                      <div className={`flex items-baseline py-2 border-b border-wire/60 transition-colors group ${
+449:                        expandedPost === post.id
+450:                          ? 'text-phosphor-bright'
+451:                          : 'text-phosphor hover:text-phosphor-bright'
+452:                      }`}>
+453:                        <span className="w-10 flex-shrink-0 text-xs text-phosphor-dim font-terminal text-base">
+454:                          {String(post.id).padStart(3, '0')}
+455:                        </span>
+456:                        <span className="flex-1 min-w-0 mr-4 text-xs truncate tracking-wide">{post.filename}</span>
+457:                        <span className="w-28 text-right flex-shrink-0 text-xs text-phosphor-dim">{post.date}</span>
+458:                        <span className="w-12 text-right flex-shrink-0 ml-3 text-xs text-phosphor-dim">{post.size}</span>
+459:                      </div>
+460:                    </button>
+461:                    {expandedPost === post.id && (
+462:                      <div className="border-b border-wire bg-panel-alt px-4 py-4">
+463:                        <p className="font-terminal text-xl text-phosphor-bright tracking-wider mb-2">
+464:                          {post.title}
+465:                        </p>
+466:                        <p className="text-xs text-phosphor leading-relaxed mb-3">{post.excerpt}</p>
+467:                        <button className="font-terminal text-sm text-phosphor-dim border border-wire px-3 py-0.5 hover:border-phosphor hover:text-phosphor transition-colors tracking-widest">
+468:                          [ READ FULL POST → ]
+469:                        </button>
+470:                      </div>
+471:                    )}
+472:                  </div>
+473:                ))}
+474:              </div>
+475:            </WindowChrome>
+476:          </div>
+477:        </section>
+478:
+479:        {/* ── ABOUT ───────────────────────────────────────────────────────── */}
+480:        <section id="about" className="py-20 px-4 border-t border-wire">
+481:          <div className="max-w-5xl mx-auto">
+482:            <div className="mb-10 flex items-baseline gap-5 flex-wrap">
+483:              <h2 className="font-terminal text-6xl text-phosphor-bright glow-text tracking-widest">ABOUT/</h2>
+484:              <span className="text-phosphor-dim text-xs tracking-widest">JANE.EXE — USER PROFILE</span>
+485:            </div>
+486:            <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-start">
+487:              {/* Portrait */}
+488:              <div className="md:col-span-2">
+489:                <WindowChrome title="PORTRAIT.JPG">
+490:                  <div className="aspect-square bg-panel-alt overflow-hidden mb-3">
+491:                    <img
+492:                      src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=500&h=500&fit=crop&auto=format"
+493:                      alt="Portrait of Jane Doe"
+494:                      className="w-full h-full object-cover phosphor-img"
+495:                    />
+496:                  </div>
+497:                  <div className="space-y-1 text-xs">
+498:                    {[
+499:                      ['NAME', 'JANE DOE'],
+500:                      ['BASE', 'BERLIN, DE'],
+501:                      ['YOB', '1995'],
+502:                      ['TOOLS', 'FIGMA / BLENDER / UNITY'],
+503:                    ].map(([k, v]) => (
+504:                      <p key={k}>
+505:                        <span className="text-phosphor-dim w-14 inline-block">{k}</span>
+506:                        <span className="text-phosphor">_{v}</span>
+507:                      </p>
+508:                    ))}
+509:                  </div>
+510:                </WindowChrome>
+511:              </div>
+512:              {/* Bio */}
+513:              <div className="md:col-span-3">
+514:                <WindowChrome title="README.txt — ABOUT ME">
+515:                  <div className="space-y-4 text-sm leading-relaxed">
+516:                    <div>
+517:                      <p className="text-phosphor-dim tracking-widest text-xs mb-2">{'/* BIOGRAPHY */'}</p>
+518:                      <p>
+519:                        I'm a graphic designer with a decade of experience working across brand identity,
+520:                        editorial, motion, and games. I run an independent practice from Berlin, taking
+521:                        on projects that sit at the edges of categories.
+522:                      </p>
+523:                    </div>
+524:                    <p>
+525:                      My work lives at the intersection of visual craft and systems thinking. I'm as interested
+526:                      in how a typeface holds together at 6pt as I am in how an entire brand behaves across
+527:                      different contexts and cultures.
+528:                    </p>
+529:                    <p>
+530:                      Outside client work, I make things for myself: zines, short films, generative art,
+531:                      and small games. This site is where all of it lives.
+532:                    </p>
+533:                    <div className="border-t border-wire pt-4">
+534:                      <p className="text-phosphor-dim tracking-widest text-xs mb-2">{'/* CONTACT */'}</p>
+535:                      <div className="space-y-1">
+536:                        {[
+537:                          ['EMAIL', 'hello@janedoe.xyz'],
+538:                          ['INSTAGRAM', '@janedoe_studio'],
+539:                          ['ARE.NA', 'janedoe'],
+540:                          ['GITHUB', 'github.com/janedoe'],
+541:                        ].map(([label, value]) => (
+542:                          <p key={label} className="text-xs">
+543:                            <span className="text-phosphor-dim w-20 inline-block">{label}</span>
+544:                            <span className="text-phosphor hover:text-phosphor-bright cursor-pointer transition-colors">{value}</span>
+545:                          </p>
+546:                        ))}
+547:                      </div>
+548:                    </div>
+549:                    <div className="border-t border-wire pt-4">
+550:                      <p className="text-phosphor-dim tracking-widest text-xs mb-2">{'/* SELECTED CLIENTS */'}</p>
+551:                      <p className="text-phosphor text-xs leading-loose tracking-wide">
+552:                        SONY MUSIC — FESTIVAL REPUBLIC — ÉDITIONS DU SOLEIL —
+553:                        KLIMA COLLECTIVE — UNDERGROUND PRESSING — VOID RECORDS —
+554:                        STUDIO CANAL — A24
+555:                      </p>
+556:                    </div>
+557:                  </div>
+558:                </WindowChrome>
+559:              </div>
+560:            </div>
+561:          </div>
+562:        </section>
+563:
+564:        {/* ── FOOTER ──────────────────────────────────────────────────────── */}
+565:        <footer className="border-t border-wire py-6 px-4 text-center">
+566:          <p className="font-terminal text-phosphor-dim text-sm tracking-widest">
+567:            © JANE DOE 2026 — BERLIN, DE — ALL FILES RESERVED
+568:          </p>
+569:          <p className="text-xs text-wire-bright mt-1 tracking-widest">
+570:            BEST VIEWED ON A CRT MONITOR AT 640×480
+571:          </p>
+572:        </footer>
+573:
+574:      </div>
+575:    </div>
+576:  );
+577:}
+
+(End of file — 577 lines.)

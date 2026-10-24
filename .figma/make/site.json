@@ -1,0 +1,10 @@
+{
+  "description": "Showcase your creative portfolio with a vintage-themed personal website featuring sections for professional work, fun media projects, a blog, and personal insights.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
